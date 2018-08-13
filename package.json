@@ -1,6 +1,6 @@
 {
   "name": "english-telegram-bot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Now you can write Telegram bots in English (mostly).",
   "main": "index.js",
   "scripts": {
