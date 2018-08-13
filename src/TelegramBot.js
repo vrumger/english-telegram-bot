@@ -24,6 +24,8 @@ class TelegramBot {
 
     addCommmand(commmandName, commmandOptions) {
         let { text, options } = commmandOptions;
+        options = options || {};
+
         const isRegex = `regex` in options;
         const trigger = new RegExp(`^${commmandName}`);
 
