@@ -1,0 +1,24 @@
+token: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+
+commands:
+    command (/start):
+        Hi! I'm a bot written in *English* (mostly)!
+        options:
+            markdown
+
+    command (/echo (.+)):
+        $1
+        options:
+            regex
+    
+    command (/md (.+)):
+        $1
+        options:
+            regex
+            markdown
+    
+    command (/html (.+)):
+        $1
+        options:
+            regex
+            html

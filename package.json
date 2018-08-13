@@ -1,0 +1,35 @@
+{
+  "name": "english-telegram-bot",
+  "version": "0.0.1",
+  "description": "Now you can write Telegram bots in English (mostly).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src"
+  },
+  "author": "Twit",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.3.1",
+    "commander": "^2.17.1",
+    "telegraf": "^3.22.2"
+  },
+  "bin": {
+    "english-telegram-bot": "bin/english-telegram-bot"
+  },
+  "keywords": [
+    "telegram",
+    "telegram-bot",
+    "telegram-bot-api",
+    "telegram bot",
+    "telegram bot api",
+    "bot",
+    "bot-api",
+    "bot api",
+    "tg",
+    "english"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YouTwitFaceTG/english-telegram-bot.git"
+  }
+}
