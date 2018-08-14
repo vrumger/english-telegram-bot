@@ -23,13 +23,14 @@ class TelegramBot {
     }
 
     addCommmand(commmandName, commmandOptions) {
-        let { text, options } = commmandOptions;
-        options = options || {};
-
-        const isRegex = `regex` in options;
         const trigger = new RegExp(`^${commmandName}`);
 
         this.bot.hears(trigger, (ctx) => {
+            let { text, options } = commmandOptions;
+            options = options || {};
+
+            const isRegex = `regex` in options;
+
             if (isRegex) {
                 text = replaceSubmatchs(ctx.match, text);
             }
