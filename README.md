@@ -45,4 +45,4 @@ commands:
 
 ## Inspiration
 
-This project was suggested by [eyaadh](https://t.me/eyaadh) after having some laughs at the new programming languages, html and css.
+This project was suggested by [eyaadh](https://t.me/eyaadh) after having some laughs at the new programming languages, [html](https://npmjs.com/html-telegram-bot-api) and [css](https://npmjs.com/css-telegram-bot-api).
