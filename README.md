@@ -1,46 +1,33 @@
 # english-telegram-bot
 
-Now you can write Telegram bots in English (mostly).
+Now you can write Telegram bots in English.
 
 ## Installation
 
-```console
-$ npm i -g english-telegram-bot
+```bash
+npm i -g english-telegram-bot
 ```
 
 ## Usage
 
-```console
-$ english-telegram-bot <path/to/file>
+```bash
+english-telegram-bot <path/to/file>
 ```
 
 ## Example
 
 ```english
-token: 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+the token is 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
 
-commands:
-    command (/start):
-        Hi! I'm a bot written in *English* (mostly)!
-        options:
-            markdown
+/start should reply with text using markdown saying Hi, I'm a bot written in *English*!
 
-    command (/echo (.+)):
-        $1
-        options:
-            regex
-    
-    command (/md (.+)):
-        $1
-        options:
-            regex
-            markdown
-    
-    command (/html (.+)):
-        $1
-        options:
-            regex
-            html
+/echo (.+) should respond with text saying $1
+
+/md (.+) should respond with text using markdown saying $1
+
+/html (.+) should respond with text using html saying $1
+
+/poll (.+) should respond with a poll where the question is $1 and the options are Yes, No
 ```
 
 ## Inspiration

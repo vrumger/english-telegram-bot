@@ -1,7 +1,15 @@
 `use strict`;
 
-const parseToken = (bot) => {
-    const token = bot.match(/(?:^|\n)token:\s*(\d+:\w+)/i);
+const tokenRegex = /^ *the +token +is +(\d+:.+) *$/im;
+const commandRegex = /^ *\/(\w+) +(?:(.+?) +)?should +(reply|respond) +with +(text +(?:using +(html|markdown) +)?saying|a +poll) +(.+) *$/gim;
+const pollRegex = /^ *where +the +question +is +(.+?) +and +the +options +are +(.+) *$/i;
+
+const regexEscape = regex => {
+    return regex.replace(/[-/\\^$*+?.()|[\]{}]/g, `\\$&`);
+};
+
+const parseToken = bot => {
+    const token = bot.match(tokenRegex);
 
     if (!token) {
         console.log(`The token is invalid`.red);
@@ -11,66 +19,49 @@ const parseToken = (bot) => {
     return token[1];
 };
 
-const parseCommands = (bot) => {
+const parseCommands = bot => {
     const commands = {};
-    const commandsIndex = bot.match(/(?:^|\n)commands:\r?\n([\s\S]+)/i);
 
-    if (!commandsIndex) {
-        return commands;
-    }
+    for (const match of bot.matchAll(commandRegex)) {
+        const [, commandName, regex, a, b, parseMode, text] = match;
 
-    const commandsSearchRegex = /(?:\s*)command\s*\((.+)\):/ig;
-
-    let command;
-    while ((command = commandsSearchRegex.exec(commandsIndex[1])) !== null) {
-        const commandName = command[1];
-
-        const { index, input } = command;
-        command = input.slice(index).trim();
-
-        let text = command.match(/.+\r?\n\s*(.+)/i);
-        command = command.slice(text[0].length).trim();
-        text = text ? text[1] : ``;
-
-        let options = /^options:\s*/i.test(command);
-
-        if (options) {
-            const optionsArray = command
-                .slice(8)
-                .trim()
-                .split(`\n`)
-                .map(option => option.toLowerCase().trim());
-
-            options = {};
-
-            for (const option of optionsArray) {
-                if ([`html`, `markdown`].includes(option)) {
-                    if (`parse_mode` in options) {
-                        console.log(`You can't use html and markdown in one message`.red);
-                        console.log(`Falling back to ${option}`.yellow);
-                    }
-
-                    options.parse_mode = option;
-                } else if (option === `regex`) {
-                    options.regex = true;
-                } else if (option.startsWith(`command`)) {
-                    break;
-                } else if (option !== ``) {
-                    console.log(`Unknown option "${option}"`.yellow);
-                }
-            }
+        let commandRegex = null;
+        if (regex) {
+            commandRegex = new RegExp(`^/${regexEscape(commandName)} ${regex}`);
         }
 
-        commands[commandName] = {
-            text,
-            options
-        };
+        const command = (commands[commandName] = {
+            regex: commandRegex,
+            responseType: a,
+        });
+
+        if (b.startsWith(`text `)) {
+            command.type = `text`;
+            command.text = text;
+            command.parseMode = parseMode;
+        } else if (b === `a poll`) {
+            const [, question, options] = text.match(pollRegex);
+            const splitOptions = options.split(`,`).map(x => x.trim());
+
+            if (splitOptions.length > 10) {
+                console.log(
+                    `Telegram doesn't allow more than 10 options on polls, ignoring`
+                        .yellow,
+                );
+            }
+
+            command.type = `poll`;
+            command.question = question;
+            command.options = splitOptions.slice(0, 10);
+        } else {
+            console.log(`Invalid type of response, skipping: ${b}`.yellow);
+        }
     }
 
     return commands;
 };
 
-module.exports = (bot) => {
+module.exports = bot => {
     return {
         token: parseToken(bot),
         commands: parseCommands(bot),
