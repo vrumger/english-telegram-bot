@@ -7,11 +7,11 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
-    "commander": "^4.0.0",
-    "telegraf": "^3.33.3"
+    "commander": "^4.1.1",
+    "telegraf": "^3.38.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^7.5.0"
   },
   "bin": {
     "english-telegram-bot": "bin/english-telegram-bot"
