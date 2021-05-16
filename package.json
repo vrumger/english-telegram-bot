@@ -11,7 +11,7 @@
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
-    "eslint": "^7.5.0"
+    "eslint": "^7.26.0"
   },
   "bin": {
     "english-telegram-bot": "bin/english-telegram-bot"
